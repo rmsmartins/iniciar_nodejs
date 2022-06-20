@@ -13,18 +13,18 @@ GET http://localhost:4002/produtos HTTP/1.1
 ###
 
 
-GET http://localhost:4002/produtos/b08cff51-790c-4515-9824-90ec37cc7e02 HTTP/1.1
+GET http://localhost:4002/produtos/{id} HTTP/1.1
 
 ###
 
-PUT http://localhost:4002/produtos/9665888d-fc0d-4a24-924f-eb2ede8bb6ec HTTP/1.1
+PUT http://localhost:4002/produtos//{id} HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Caneta azul",
-    "price": 4
+    "name": "Caneta amarela",
+    "price": 6
 }
 
 ###
 
-DELETE http://localhost:4002/produtos/249fa399-e47e-492a-b42d-2c65d6445146 HTTP/1.1
+DELETE http://localhost:4002/produtos//{id}
