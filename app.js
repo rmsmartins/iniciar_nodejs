@@ -1,12 +1,21 @@
 const express = require("express");
 const { randomUUID } = require("crypto");
+const fs = require("fs");
 
 const app = express();
 
 app.use(express.json());
 
 
-const produtos = [];
+let produtos = [];
+
+fs.readFile("produtos.json", "utf-8", (err, data) => {
+    if(err){
+        console.log(err)
+    }else {
+        produtos = JSON.parse(data);
+    }
+})
 
 /**
  * POST => Inserir um dado
@@ -34,6 +43,8 @@ app.post("/produtos", (request, response) => {
 
     produtos.push(produto);
 
+    ProductFile();
+
     return response.json(produto);
 });
 
@@ -59,7 +70,9 @@ app.put("/produtos/:id", (request, response) => {
         ...produtos[produtoIndex],
         name,
         price
-    }
+    };
+
+    ProductFile();
 
     return response.json({ message: "Produto alterado com sucesso"});
 });
@@ -72,8 +85,21 @@ app.delete("/produtos/:id",  (request, response) => {
     
     produtos.splice(produtoIndex, 1);
 
-    return response.json({message: "Produto removido com sucesso"})
+    ProductFile()
+
+    return response.json({message: "Produto removido com sucesso"});
 })
 
 
-app.listen(4002, () => console.log("Servidor está a correr na porta 4002"))
+function ProductFile() {
+    fs.writeFile("produtos.json", JSON.stringify(produtos), (err) => {
+        if(err) {
+            console.log(err)
+        }else {
+            console.log("Produto inserido");
+        }
+        
+    });
+}
+
+app.listen(4002, () => console.log("Servidor está a correr na porta 4002"));
