@@ -5,7 +5,7 @@ const app = express();
 
 app.get("/primeira-rota", (request, response) => {
     return response.json({
-        message: "Acedeu à primeira rota",
+        message: "Acedeu à primeira rota com nodemon",
     });
 });
 
